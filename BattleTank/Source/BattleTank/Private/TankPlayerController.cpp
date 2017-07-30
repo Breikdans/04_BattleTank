@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "CollisionQueryParams.h"
 #include "TankPlayerController.h"
 
 void ATankPlayerController::BeginPlay()
@@ -77,9 +76,6 @@ bool ATankPlayerController::GetLookVectorHitLocation(const FVector& LookDirectio
 	auto StartLocation = PlayerCameraManager->GetCameraLocation();
 	auto EndLocation = StartLocation + (LookDirection * LineTraceRange);
 
-	FCollisionQueryParams QueryParams(FName(TEXT("")), false, GetOwner());
-	FCollisionResponseParams CollisionResponseParams;
-
 	// initialization of values to return
 	bool IsHit = false;
 	HitLocation = FVector(FVector::ZeroVector);
@@ -87,9 +83,7 @@ bool ATankPlayerController::GetLookVectorHitLocation(const FVector& LookDirectio
 	IsHit = GetWorld()->LineTraceSingleByChannel(HitResult,
 												 StartLocation,
 												 EndLocation,
-												 ECollisionChannel::ECC_Visibility,
-												 QueryParams,
-												 CollisionResponseParams);
+												 ECollisionChannel::ECC_Visibility);
 	if (IsHit)
 		HitLocation = HitResult.Location;
 
