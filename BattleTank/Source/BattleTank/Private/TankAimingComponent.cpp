@@ -34,6 +34,8 @@ void UTankAimingComponent::AimAt(const FVector& HitLocation, float LaunchSpeed)
 
 	FVector OutLaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(GetOwner());
 	bool bHaveAimsolution = UGameplayStatics::SuggestProjectileVelocity
 	(
 		this,
@@ -44,7 +46,9 @@ void UTankAimingComponent::AimAt(const FVector& HitLocation, float LaunchSpeed)
 		false,
 		0,
 		0,
-		ESuggestProjVelocityTraceOption::DoNotTrace
+		ESuggestProjVelocityTraceOption::DoNotTrace,
+		FCollisionResponseParams::DefaultResponseParam,
+		ActorsToIgnore
 	);
 
 	if (bHaveAimsolution)
@@ -62,5 +66,9 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto DeltaRotator = AimAsRotator - BarrelRotator;
 
 	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
+
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
+		Turret->Rotate(DeltaRotator.Yaw);
+	else
+		Turret->Rotate(-DeltaRotator.Yaw);
 }
