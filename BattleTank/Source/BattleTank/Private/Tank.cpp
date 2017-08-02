@@ -50,20 +50,13 @@ void ATank::AimAt(const FVector& HitLocation)
 
 void ATank::Fire()
 {
-	auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f: Player tank Firing!!"), Time);
-
-	// para poner trazas de debug en pantalla y tener una alternativa a UE_LOG
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(0,
-										 0.35f,
-										 FColor::Cyan.WithAlpha(150),
-										 FString::Printf(TEXT("%f: Player tank Firing!!"), Time));
-
 	if (!Barrel) 
 		return;
 	
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint,
-										Barrel->GetSocketLocation(FName("Projectile")),
-										Barrel->GetSocketRotation(FName("Projectile")) );
+	// Spawn a projectile at the socket location on the barrel
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(	ProjectileBlueprint,
+															Barrel->GetSocketLocation(FName("Projectile")),
+															Barrel->GetSocketRotation(FName("Projectile")) );
+
+	Projectile->LaunchProjectile(LaunchSpeed);
 }
