@@ -21,6 +21,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void IntendMoveForward(float Throw);	// Throw, en el sentido de "Accionador" porque controla cuanto hacia adelante o atras es accionado el thumbstick 
+
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	void IntendTurnRight(float Throw);
 	
 private:
 	UTankTrack* LeftTrack = nullptr;

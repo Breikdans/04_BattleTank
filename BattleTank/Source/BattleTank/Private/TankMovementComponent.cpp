@@ -9,26 +9,33 @@
 
 void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
 {
-	if (!LeftTrackToSet || !RightTrackToSet)
-		return;
-
 	LeftTrack	= LeftTrackToSet;
 	RightTrack	= RightTrackToSet;
 }
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("Intend move forward: %f "), Throw);
+	if (!LeftTrack || !RightTrack)	return;
 
-	// para poner trazas de debug en pantalla y tener una alternativa a UE_LOG
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(-1,
-										 0.35f,
-										 FColor::Cyan.WithAlpha(150),
-										 FString::Printf(TEXT("Intend move forward: %f "), Throw));
 	LeftTrack->SetThrottle(Throw);
 	RightTrack->SetThrottle(Throw);
 	// TAREA prevent double speed due to dual control use (triggers and left stick)
 }
 
+void UTankMovementComponent::IntendTurnRight(float Throw)
+{
+	//auto Time = GetWorld()->GetTimeSeconds();
+	//UE_LOG(LogTemp, Warning, TEXT("Intend move forward: %f "), Throw);
+
+	//// para poner trazas de debug en pantalla y tener una alternativa a UE_LOG
+	//if (GEngine)
+	//	GEngine->AddOnScreenDebugMessage(-1,
+	//									 0.35f,
+	//									 FColor::Cyan.WithAlpha(150),
+	//									 FString::Printf(TEXT("Intend move forward: %f "), Throw));
+	if (!LeftTrack || !RightTrack)	return;
+
+	LeftTrack->SetThrottle(Throw);
+	RightTrack->SetThrottle(-Throw);
+	// TAREA prevent double speed due to dual control use (triggers and left stick)
+}
