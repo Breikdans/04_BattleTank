@@ -22,7 +22,6 @@ public:
 
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
 
-	// TAREA add SetTurretReference
 	void SetTurretReference(UTankTurret* TurretToSet);
 
 	void AimAt(const FVector& HitLocation, float LaunchSpeed);

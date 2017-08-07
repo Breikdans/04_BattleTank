@@ -29,16 +29,6 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::LaunchProjectile (float Speed)
 {
-	auto Time = GetWorld()->GetTimeSeconds();
-	UE_LOG(LogTemp, Warning, TEXT("%f: tank Firing at %f!!"), Time, Speed);
-
-	// para poner trazas de debug en pantalla y tener una alternativa a UE_LOG
-	if (GEngine)
-		GEngine->AddOnScreenDebugMessage(0,
-										 0.35f,
-										 FColor::Cyan.WithAlpha(150),
-										 FString::Printf(TEXT("%f: tank Firing at %f!!"), Time, Speed));
-
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();
 }
