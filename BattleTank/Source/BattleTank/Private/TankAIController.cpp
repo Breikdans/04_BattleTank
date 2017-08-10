@@ -3,6 +3,9 @@
 #include "TankAIController.h"
 #include "Tank.h"
 
+// Se incluyen estos dos para que funcione correctamente intellisense... sino no encontraba GetWorld() ni GEngine y no funcionaba
+#include "Engine/World.h"
+#include "Engine/Engine.h"
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -18,8 +21,8 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (PlayerTank && ControlledTank)
 	{
-		// TAREA move towards the player
-
+		// move towards the player
+		MoveToActor(PlayerTank, AcceptanceRadius); // TAREA check radius is in centimetres
 		// Aim towards the player
 		ControlledTank->AimAt(PlayerTank->GetActorLocation());
 

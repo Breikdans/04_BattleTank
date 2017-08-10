@@ -19,13 +19,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendMoveForward(float Throw);	// Throw, en el sentido de "Accionador" porque controla cuanto hacia adelante o atras es accionado el thumbstick 
 
-	UFUNCTION(BlueprintCallable, Category = "Setup")
+	UFUNCTION(BlueprintCallable, Category = "Input")
 	void IntendTurnRight(float Throw);
 	
 private:
+	// Called from the pathfinding logic from the AI controllers
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
 };
