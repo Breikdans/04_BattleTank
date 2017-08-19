@@ -12,6 +12,7 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 	LeftTrack	= LeftTrackToSet;
 	RightTrack	= RightTrackToSet;
 }
+
 void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
 {
 	// No need to call Super()!!
