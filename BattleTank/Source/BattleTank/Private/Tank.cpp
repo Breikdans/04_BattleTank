@@ -24,6 +24,8 @@ void ATank::BeginPlay()
 
 	auto TankName = GetName();
 	UE_LOG(LogTemp, Warning, TEXT("TANKES: [%s] BeginPlay ATank C++"), *TankName);
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 void ATank::AimAt(const FVector& HitLocation)
