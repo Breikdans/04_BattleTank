@@ -6,6 +6,8 @@
 // Se incluyen estos dos para que funcione correctamente intellisense... sino no encontraba GetWorld() ni GEngine y no funcionaba
 #include "Engine/World.h"
 #include "Engine/Engine.h"
+
+// Depends on movemement controller Via pathfinding system
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -19,7 +21,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControlledTank = Cast<ATank>(GetPawn());
 
-	if (PlayerTank && ControlledTank)
+	if (ensure(PlayerTank && ControlledTank))
 	{
 		// move towards the player
 		MoveToActor(PlayerTank, AcceptanceRadius); // TAREA check radius is in centimetres
