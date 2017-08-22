@@ -3,7 +3,6 @@
 #include "Tank.h"
 #include "Projectile.h"
 #include "TankBarrel.h"
-#include "TankAimingComponent.h"
 // Se incluyen estos dos para que funcione correctamente intellisense... sino no encontraba GetWorld() ni GEngine y no funcionaba
 #include "Engine/World.h"
 #include "Engine/Engine.h"
@@ -21,19 +20,6 @@ ATank::ATank()
 void ATank::BeginPlay()
 {
 	Super::BeginPlay();	// Needed for BP Begin Play to run!!
-
-	auto TankName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("TANKES: [%s] BeginPlay ATank C++"), *TankName);
-
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
-}
-
-void ATank::AimAt(const FVector& HitLocation)
-{
-	if (!ensure(TankAimingComponent))
-		return;
-
-	TankAimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
 void ATank::Fire()

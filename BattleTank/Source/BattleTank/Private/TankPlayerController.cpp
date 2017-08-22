@@ -2,13 +2,16 @@
 
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
-#include "Tank.h"
+
+// Se incluyen estos dos para que funcione correctamente intellisense... sino no encontraba GetWorld() ni GEngine y no funcionaba
+#include "Engine/World.h"
+#include "Engine/Engine.h"
 
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	if (!ensure(AimingComponent))
 		return;
 
@@ -21,20 +24,15 @@ void ATankPlayerController::Tick(float DeltaTime)
 	AimTowardsCrossHair();
 }
 
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController::AimTowardsCrossHair()
 {
-	if (!ensure(GetControlledTank()))
+	if (!ensure(AimingComponent))
 		return;
 
 	FVector HitLocation(FVector::ZeroVector);	// Out Parameter
 	if (GetSightRayHitLocation(HitLocation))	// Has "side-effect", is going to line trace
 	{
-		GetControlledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 	}
 }
 

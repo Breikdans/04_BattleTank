@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankAIController.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
 
 // Se incluyen estos dos para que funcione correctamente intellisense... sino no encontraba GetWorld() ni GEngine y no funcionaba
 #include "Engine/World.h"
@@ -12,23 +12,27 @@ void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+
 }
 
 void ATankAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
-	auto ControlledTank = Cast<ATank>(GetPawn());
+	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
+	auto ControlledTank = GetPawn();
+	
+	if (!ensure(PlayerTank && ControlledTank && AimingComponent))
+		return;
 
-	if (ensure(PlayerTank && ControlledTank))
-	{
-		// move towards the player
-		MoveToActor(PlayerTank, AcceptanceRadius); // TAREA check radius is in centimetres
-		// Aim towards the player
-		ControlledTank->AimAt(PlayerTank->GetActorLocation());
+	// move towards the player
+	MoveToActor(PlayerTank, AcceptanceRadius); // TAREA check radius is in centimetres
 
-		// Fire if ready
-		ControlledTank->Fire();	// TAREA limit firing rate
-	}
+	// Aim towards the player
+	AimingComponent->AimAt(PlayerTank->GetActorLocation());
+
+	// TAREA Fix firing
+	// Fire if ready
+	//AimingComponent->Fire();	// TAREA limit firing rate
 }

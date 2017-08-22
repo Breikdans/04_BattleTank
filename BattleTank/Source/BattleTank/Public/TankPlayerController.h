@@ -7,7 +7,6 @@
 #include "TankPlayerController.generated.h"	// tiene que ser el ultimo en ser incluido
 
 // Forward declaration
-class ATank;
 class UTankAimingComponent;
 
 /**
@@ -23,9 +22,6 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 protected:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	ATank* GetControlledTank() const;
-
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAmingComponent(UTankAimingComponent* AimCompRef);
 private:
@@ -48,4 +44,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float LineTraceRange		= 1000000.0f;
+
+	UTankAimingComponent* AimingComponent = nullptr;
 };
