@@ -24,6 +24,7 @@ public:
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAmingComponent(UTankAimingComponent* AimCompRef);
+
 private:
 	// Start the tank moving the barrel so that a shot would hit where
 	// the crosshair intersects the world
