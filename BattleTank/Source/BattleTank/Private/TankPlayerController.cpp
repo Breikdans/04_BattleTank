@@ -26,6 +26,9 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowardsCrossHair()
 {
+	if (!GetPawn())	// if not possessing.... por ejemplo, cuando morimos y queremos ver desde algun tanque, pero ya no podemos poseer ninguno...
+		return;
+
 	if (!ensure(AimingComponent))
 		return;
 
