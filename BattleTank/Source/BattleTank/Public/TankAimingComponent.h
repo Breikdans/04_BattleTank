@@ -32,11 +32,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
+	void AimAt(const FVector& HitLocation);
+
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
-	void AimAt(const FVector& HitLocation);
-
+	EFiringState GetFiringState() const;
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
