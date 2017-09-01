@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Particles/ParticleSystemComponent.h"
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
@@ -24,8 +25,14 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	void LaunchProjectile (float Speed);
+
 private:
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 	
-	
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* CollisionMesh = nullptr;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UParticleSystemComponent* LaunchBlast = nullptr;
+
 };
