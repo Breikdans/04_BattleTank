@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "Projectile.generated.h"
 
-// Forward Declarations
 class UProjectileMovementComponent;
 class UStaticMeshComponent;
 class UParticleSystemComponent;
@@ -49,4 +48,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float DestroyDelay = 10.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float ProjectileDamage = 20.0f;
+
 };

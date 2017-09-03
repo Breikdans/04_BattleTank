@@ -5,7 +5,10 @@
 #include "Components/StaticMeshComponent.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicsEngine/RadialForceComponent.h"
+#include "Classes/Kismet/GameplayStatics.h"
+#include "GameFramework/DamageType.h"
 #include "TimerManager.h"
+
 
 // Se incluyen estos dos para que funcione correctamente intellisense... sino no encontraba GetWorld() ni GEngine y no funcionaba
 #include "Engine/World.h"
@@ -62,6 +65,13 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComponent,
 
 	SetRootComponent(ImpactBlast);
 	CollisionMesh->DestroyComponent();
+
+	UGameplayStatics::ApplyRadialDamage(this,
+										ProjectileDamage,
+										GetActorLocation(),
+										ExplosionForce->Radius,			// for consistancy
+										UDamageType::StaticClass(),
+										TArray<AActor*>());				// damage all actors in radius (ExplosionForce->Radius)
 
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AProjectile::OnTimerExpire, DestroyDelay);
