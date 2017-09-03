@@ -7,8 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 
 // Se incluyen estos dos para que funcione correctamente intellisense... sino no encontraba GetWorld() ni GEngine y no funcionaba
-//#include "Engine/World.h"
-//#include "Engine/Engine.h"
+#include "Engine/World.h"
+#include "Engine/Engine.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
