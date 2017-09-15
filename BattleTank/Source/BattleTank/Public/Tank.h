@@ -18,9 +18,14 @@ public:
 							 class AController * EventInstigator,
 							 AActor * DamageCauser) override;
 
+	// returns current health as a percentage of starting health, between 0 and 1
+	UFUNCTION(BlueprintPure, Category = "Health")		// BlueprintPure no modifica nada de la clase
+	float GetHealthPercent() const;
+
 private:
 	// Sets default values for this pawn's properties
 	ATank();
+
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingHealth = 100;
 

@@ -5,6 +5,11 @@
 #include "Engine/World.h"
 #include "Engine/Engine.h"
 
+float ATank::GetHealthPercent() const
+{
+	return (float)CurrentHealth / (float)StartingHealth;
+}
+
 // Sets default values
 ATank::ATank()
 {
@@ -20,10 +25,10 @@ float ATank::TakeDamage(float DamageAmount,
 {
 
 	// Con DamageAmount, aplica el daño por defecto especificado (20)
-//	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
+	int32 DamagePoints = FPlatformMath::RoundToInt(DamageAmount);
 
 	// Llamando a la funcion de la clase padre y recogiendo el resultado, nos da el daño inglingido, segun el radio del impacto, MOLA MAS!!
-	int32 DamagePoints = FPlatformMath::RoundToInt(Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser));
+//	int32 DamagePoints = FPlatformMath::RoundToInt(Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser));
 	int32 DamageToApply = FMath::Clamp<int32>(DamagePoints, 0, CurrentHealth);
 
 	auto TankName = GetName();
