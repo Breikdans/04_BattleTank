@@ -41,10 +41,13 @@ float ATank::TakeDamage(float DamageAmount,
 
 	CurrentHealth -= DamageToApply;
 	if (CurrentHealth <= 0)
+	{
 		GEngine->AddOnScreenDebugMessage(-1,
 										 10.0f,
 										 FColor::Red.WithAlpha(150),
 										 FString::Printf(TEXT("Tank:(%s). Died!!!"), *TankName));
 
+		OnDeath.Broadcast();
+	}
 	return DamageToApply;
 }
