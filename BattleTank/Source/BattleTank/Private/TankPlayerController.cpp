@@ -2,6 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"	// so we can implement OnDeath
 
 // Se incluyen estos dos para que funcione correctamente intellisense... sino no encontraba GetWorld() ni GEngine y no funcionaba
 #include "Engine/World.h"
@@ -16,6 +17,30 @@ void ATankPlayerController::BeginPlay()
 		return;
 
 	FoundAmingComponent(AimingComponent);
+}
+
+// esta funcion es llamada por el motor, cuando el Pawn es poseido.
+// la usamos para suscribirnos al evento de OnDeath del tanque, 
+// ya que en beginplay posiblemente aun no haya sido poseido el Pawn
+
+void ATankPlayerController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+		if (!ensure(PossessedTank))
+			return;
+
+		// TAREA: Subscribe our local method to the tank's death event
+		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankPlayerController::OnPossessedTankDeath);
+	}
+}
+
+void ATankPlayerController::OnPossessedTankDeath()
+{
+	StartSpectatingOnly();
 }
 
 void ATankPlayerController::Tick(float DeltaTime)

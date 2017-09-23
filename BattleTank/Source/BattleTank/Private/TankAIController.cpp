@@ -7,6 +7,7 @@
 // Se incluyen estos dos para que funcione correctamente intellisense... sino no encontraba GetWorld() ni GEngine y no funcionaba
 #include "Engine/World.h"
 #include "Engine/Engine.h"
+#include "GameFramework/Pawn.h"
 
 // Depends on movemement controller Via pathfinding system
 void ATankAIController::BeginPlay()
@@ -38,7 +39,10 @@ void ATankAIController::SetPawn(APawn* InPawn)
 
 void ATankAIController::OnPossessedTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Received!"))
+	if (!GetPawn())
+		return;
+
+	GetPawn()->DetachFromControllerPendingDestroy();
 }
 
 void ATankAIController::Tick(float DeltaTime)
@@ -48,7 +52,9 @@ void ATankAIController::Tick(float DeltaTime)
 	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
 	auto ControlledTank = GetPawn();
 	
-	if (!ensure(PlayerTank && ControlledTank && AimingComponent))
+	if (!PlayerTank)
+		return;
+	if (!ensure(ControlledTank && AimingComponent))
 		return;
 
 	// move towards the player
